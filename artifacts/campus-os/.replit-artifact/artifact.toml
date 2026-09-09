@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "CampusOS"
+description = "A student career operating system for building skills, practicing interviews, discovering placements, and tracking career readiness."
+version = "1.0.0"
+id = "artifacts/campus-os"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25858
+
+[services.development]
+run = "pnpm --filter @workspace/campus-os run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/campus-os", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/campus-os/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25858"
+BASE_PATH = "/"
