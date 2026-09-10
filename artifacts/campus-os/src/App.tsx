@@ -68,13 +68,11 @@ function Logo() {
 }
 
 function HeroExperience({ onEnter }: { onEnter: () => void }) {
-  const [ready, setReady] = useState(false);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
   useEffect(() => {
-    const timer = window.setTimeout(() => setReady(true), 450);
     const onMove = (event: MouseEvent) => setParallax({ x: (event.clientX / window.innerWidth - 0.5) * 8, y: (event.clientY / window.innerHeight - 0.5) * 5 });
     window.addEventListener('mousemove', onMove, { passive: true });
-    return () => { window.clearTimeout(timer); window.removeEventListener('mousemove', onMove); };
+    return () => window.removeEventListener('mousemove', onMove);
   }, []);
   return (
     <section className="hero-shell" aria-label="CampusOS introduction">
@@ -83,7 +81,6 @@ function HeroExperience({ onEnter }: { onEnter: () => void }) {
       <div className="hero-particle hero-particle-one" /><div className="hero-particle hero-particle-two" /><div className="hero-particle hero-particle-three" />
       <div className="hero-kicker">CAMPUSOS <span /> CAREER OPERATING SYSTEM</div>
       <div className="hero-wordmark"><span className="hero-wordmark-shadow">Campus<span>OS</span></span><span className="hero-wordmark-face">Campus<span>OS</span></span><p>The operating system for student careers.</p></div>
-      <div className={`hero-student ${ready ? 'hero-student-active' : ''}`} style={{ transform: `translate3d(${parallax.x}px,${parallax.y}px,0)` }}><img src="/campusos-student.png" alt="Student building momentum with CampusOS" /></div>
       <div className="hero-copy"><span className="hero-status-dot" />Initializing your career workspace...</div>
       <div className="hero-cta-row"><button data-testid="button-enter-campusos" onClick={onEnter} className="hero-enter-button">Explore CampusOS <ArrowUpRight size={15} /></button><span>Placements · CodeLab · Career Analytics</span></div>
     </section>
