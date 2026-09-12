@@ -7,6 +7,7 @@ import {
   BookOpen,
   BrainCircuit,
   BriefcaseBusiness,
+  Building2,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -40,6 +41,8 @@ import {
   type CodeProblem,
   type Difficulty,
 } from '@/lib/codelab-data';
+import CareerTwin from '@/components/career-twin/CareerTwin';
+import CampusIntelligence from '@/components/career-twin/CampusIntelligence';
 
 type Icon = typeof LayoutDashboard;
 type NavItem = Omit<CampusModule, 'icon'> & { icon: Icon };
@@ -55,6 +58,8 @@ const moduleIcons: Record<string, Icon> = {
   'line-chart': LineChart,
   trophy: Trophy,
   'brain-circuit': BrainCircuit,
+  sparkles: Sparkles,
+  'building-2': Building2,
 };
 const navItems: NavItem[] = campusModules.map((module) => ({ ...module, icon: moduleIcons[module.icon] }));
 
@@ -79,10 +84,10 @@ function HeroExperience({ onEnter }: { onEnter: () => void }) {
       <div className="hero-atmosphere" style={{ transform: `translate3d(${parallax.x * 0.45}px,${parallax.y * 0.45}px,0)` }} />
       <div className="hero-grid" /><div className="hero-architecture hero-architecture-left" /><div className="hero-architecture hero-architecture-right" />
       <div className="hero-particle hero-particle-one" /><div className="hero-particle hero-particle-two" /><div className="hero-particle hero-particle-three" />
-      <div className="hero-kicker">CAMPUSOS <span /> CAREER OPERATING SYSTEM</div>
-      <div className="hero-wordmark"><span className="hero-wordmark-shadow">Campus<span>OS</span></span><span className="hero-wordmark-face">Campus<span>OS</span></span><p>The operating system for student careers.</p></div>
-      <div className="hero-copy"><span className="hero-status-dot" />Initializing your career workspace...</div>
-      <div className="hero-cta-row"><button data-testid="button-enter-campusos" onClick={onEnter} className="hero-enter-button">Explore CampusOS <ArrowUpRight size={15} /></button><span>Placements · CodeLab · Career Analytics</span></div>
+      <div className="hero-kicker">CAMPUSOS <span /> AI CAREER OPERATING SYSTEM</div>
+      <div className="hero-wordmark"><span className="hero-wordmark-shadow hero-wordmark-phrase">Your career.<br />Engineered.</span><span className="hero-wordmark-face hero-wordmark-phrase">Your career.<br />Engineered.</span><p>CampusOS turns your college journey into an intelligent career system — a Career Twin that evolves with every project, problem, and interview.</p></div>
+      <div className="hero-copy"><span className="hero-status-dot" />Your Career Twin is evolving...</div>
+      <div className="hero-cta-row"><button data-testid="button-enter-campusos" onClick={onEnter} className="hero-enter-button">Enter your Career Twin <ArrowUpRight size={15} /></button><span>Career Twin · Missions · Interview Arena · Company Fit</span></div>
     </section>
   );
 }
@@ -244,16 +249,21 @@ function ProblemWorkspaceContent({ problem, onBack }: { problem: CodeProblem; on
 }
 
 function Overview({ active }: { active: string }) {
-  return <div className="overview-empty"><div className="empty-orbit"><LayoutDashboard size={23} /></div><p className="section-kicker">{active === 'Overview' ? 'Student command center' : active}</p><h1>{active === 'Overview' ? 'Your Overview is ready' : `${active} is ready for you`}</h1><p>Choose CodeLab from the sidebar to enter your coding practice workspace.</p><button data-testid="button-empty-codelab" className="primary-button" onClick={() => window.dispatchEvent(new CustomEvent('campusos-select-codelab'))}>Open CodeLab <ArrowUpRight size={14} /></button></div>;
+  return <div className="overview-empty"><div className="empty-orbit"><LayoutDashboard size={23} /></div><p className="section-kicker">{active}</p><h1>{`${active} is ready for you`}</h1><p>Choose CodeLab from the sidebar to enter your coding practice workspace.</p><button data-testid="button-empty-codelab" className="primary-button" onClick={() => window.dispatchEvent(new CustomEvent('campusos-select-codelab'))}>Open CodeLab <ArrowUpRight size={14} /></button></div>;
 }
 
 function App() {
-  const [active, setActive] = useState('CodeLab');
+  const [active, setActive] = useState('Career Twin');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
   const [globalQuery, setGlobalQuery] = useState('');
   useEffect(() => { const selectCodeLab = () => setActive('CodeLab'); window.addEventListener('campusos-select-codelab', selectCodeLab); return () => window.removeEventListener('campusos-select-codelab', selectCodeLab); }, []);
-  return <div className="campus-app">{heroVisible && <HeroExperience onEnter={() => setHeroVisible(false)} />}<Sidebar active={active} setActive={setActive} open={sidebarOpen} setOpen={setSidebarOpen} /><main className="app-main"><Header setOpen={setSidebarOpen} query={globalQuery} setQuery={setGlobalQuery} /><div className="main-content">{active === 'CodeLab' ? <CodeLab globalQuery={globalQuery} /> : <Overview active={active} />}</div></main>{sidebarOpen && <button data-testid="button-close-navigation-overlay" className="sidebar-overlay" onClick={() => setSidebarOpen(false)} aria-label="Close navigation overlay" />}</div>;
+  const content =
+    active === 'CodeLab' ? <CodeLab globalQuery={globalQuery} /> :
+    active === 'Career Twin' ? <CareerTwin /> :
+    active === 'Campus Intelligence' ? <CampusIntelligence /> :
+    <Overview active={active} />;
+  return <div className="campus-app">{heroVisible && <HeroExperience onEnter={() => setHeroVisible(false)} />}<Sidebar active={active} setActive={setActive} open={sidebarOpen} setOpen={setSidebarOpen} /><main className="app-main"><Header setOpen={setSidebarOpen} query={globalQuery} setQuery={setGlobalQuery} /><div className="main-content">{content}</div></main>{sidebarOpen && <button data-testid="button-close-navigation-overlay" className="sidebar-overlay" onClick={() => setSidebarOpen(false)} aria-label="Close navigation overlay" />}</div>;
 }
 
 export default App;

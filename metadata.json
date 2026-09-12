@@ -1,0 +1,8 @@
+{
+  "name": "CampusOS",
+  "description": "Student career operating system for building skills, practicing interviews, discovering placements, and tracking career readiness.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

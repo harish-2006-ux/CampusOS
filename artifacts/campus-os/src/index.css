@@ -358,6 +358,7 @@ button { cursor: pointer; }
 .hero-kicker span { width: 34px; height: 1px; background: #7166d9; }
 .hero-wordmark { position: absolute; top: 42%; left: 50%; z-index: 3; text-align: center; transform-origin: center; animation: wordmark-settle .8s .08s cubic-bezier(.2,.85,.25,1.1) both; }
 .hero-wordmark-face, .hero-wordmark-shadow { display: block; font-size: clamp(56px, 10vw, 148px); font-weight: 850; letter-spacing: -.095em; line-height: .86; white-space: nowrap; }
+.hero-wordmark-phrase { font-size: clamp(34px, 6.2vw, 92px); letter-spacing: -.045em; line-height: 1.04; white-space: normal; }
 .hero-wordmark-face { position: relative; background: linear-gradient(105deg, #30368f 15%, #5361dc 53%, #8d66dd 92%); background-clip: text; color: transparent; text-shadow: 0 18px 32px rgba(75,71,176,.17); }
 .hero-wordmark-shadow { position: absolute; top: 10px; left: 0; color: rgba(72,72,152,.12); filter: blur(1px); }
 .hero-wordmark-face span, .hero-wordmark-shadow span { color: #7064da; }
